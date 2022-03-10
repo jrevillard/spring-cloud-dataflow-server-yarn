@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,6 +19,7 @@ package org.springframework.cloud.dataflow.server.yarn;
 import java.util.Map;
 
 import org.apache.hadoop.hdfs.DistributedFileSystem;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import org.springframework.boot.SpringApplication;
@@ -32,7 +33,6 @@ import org.springframework.data.hadoop.fs.HdfsResourceLoader;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
 
 public class YarnDataFlowServerTests {
 
@@ -41,21 +41,21 @@ public class YarnDataFlowServerTests {
 		SpringApplication app = new SpringApplication(YarnDataFlowServer.class);
 		ConfigurableApplicationContext context = app.run(new String[] { "--server.port=0",
 				"--spring.cloud.dataflow.yarn.version=fake", "--spring.hadoop.fsUri=hdfs://localhost:8020" });
-		assertThat(context.containsBean("appDeployer"), is(true));
-		assertThat(context.getBean("appDeployer"), instanceOf(YarnAppDeployer.class));
-		assertThat(context.containsBean("taskLauncher"), is(true));
-		assertThat(context.getBean("taskLauncher"), instanceOf(YarnTaskLauncher.class));
-		assertThat(context.containsBean("delegatingResourceLoader"), is(true));
+		MatcherAssert.assertThat(context.containsBean("appDeployer"), is(true));
+		MatcherAssert.assertThat(context.getBean("appDeployer"), instanceOf(YarnAppDeployer.class));
+		MatcherAssert.assertThat(context.containsBean("taskLauncher"), is(true));
+		MatcherAssert.assertThat(context.getBean("taskLauncher"), instanceOf(YarnTaskLauncher.class));
+		MatcherAssert.assertThat(context.containsBean("delegatingResourceLoader"), is(true));
 		DelegatingResourceLoader delegatingResourceLoader = context.getBean(DelegatingResourceLoader.class);
 		Map<String, ResourceLoader> loaders = TestUtils.readField("loaders", delegatingResourceLoader);
-		assertThat(loaders.size(), is(4));
-		assertThat(loaders.get("file"), notNullValue());
-		assertThat(loaders.get("http"), notNullValue());
-		assertThat(loaders.get("maven"), notNullValue());
-		assertThat(loaders.get("hdfs"), notNullValue());
+		MatcherAssert.assertThat(loaders.size(), is(4));
+		MatcherAssert.assertThat(loaders.get("file"), notNullValue());
+		MatcherAssert.assertThat(loaders.get("http"), notNullValue());
+		MatcherAssert.assertThat(loaders.get("maven"), notNullValue());
+		MatcherAssert.assertThat(loaders.get("hdfs"), notNullValue());
 		ResourceLoader resourceLoader = loaders.get("hdfs");
-		assertThat(resourceLoader, instanceOf(HdfsResourceLoader.class));
-		assertThat(((HdfsResourceLoader)resourceLoader).getFileSystem(), instanceOf(DistributedFileSystem.class));
+		MatcherAssert.assertThat(resourceLoader, instanceOf(HdfsResourceLoader.class));
+		MatcherAssert.assertThat(((HdfsResourceLoader)resourceLoader).getFileSystem(), instanceOf(DistributedFileSystem.class));
 		context.close();
 	}
 

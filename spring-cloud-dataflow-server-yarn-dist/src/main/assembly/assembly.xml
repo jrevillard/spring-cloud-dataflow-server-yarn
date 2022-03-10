@@ -32,8 +32,7 @@
 				<include>org.springframework.cloud:spring-cloud-dataflow-server-yarn-client</include>
 				<include>org.springframework.cloud:spring-cloud-dataflow-server-yarn-shell</include>
 				<include>org.springframework.cloud:metrics-collector-rabbit</include>
-				<include>org.springframework.cloud:metrics-collector-kafka-09</include>
-				<include>org.springframework.cloud:metrics-collector-kafka-10</include>
+				<include>org.springframework.cloud:metrics-collector-kafka</include>
 			</includes>
 		</dependencySet>
 	</dependencySets>

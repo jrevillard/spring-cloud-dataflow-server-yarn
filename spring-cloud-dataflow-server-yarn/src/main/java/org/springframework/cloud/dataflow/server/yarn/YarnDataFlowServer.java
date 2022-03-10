@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,8 +17,11 @@
 package org.springframework.cloud.dataflow.server.yarn;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.cloud.dataflow.server.EnableDataFlowServer;
+import org.springframework.cloud.deployer.spi.local.LocalDeployerAutoConfiguration;
 
 /**
  * Bootstrap class for Spring Cloud Data Flow server on Apache Hadoop YARN.
@@ -27,7 +30,7 @@ import org.springframework.cloud.dataflow.server.EnableDataFlowServer;
  * @author Janne Valkealahti
  */
 @EnableDataFlowServer
-@SpringBootApplication
+@SpringBootApplication (exclude = {ManagementWebSecurityAutoConfiguration.class, SecurityAutoConfiguration.class, LocalDeployerAutoConfiguration.class})
 public class YarnDataFlowServer {
 
 	public static void main(String[] args) {
