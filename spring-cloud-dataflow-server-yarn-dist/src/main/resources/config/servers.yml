@@ -12,10 +12,10 @@ spring:
   # Configured for Hadoop single-node running on localhost. Replace with property values reflecting your
   # actual Hadoop cluster when running in a distributed environment.
   hadoop:
-    fsUri: hdfs://localhost:8020
-    resourceManagerHost: localhost
+    fsUri: hdfs://cluster-research:8020
+    resourceManagerHost: bgsmstr01-rci.bigeys.priv
     resourceManagerPort: 8032
-    resourceManagerSchedulerAddress: localhost:8030
+    resourceManagerSchedulerAddress: bgsmstr01-rci.bigeys.priv:8030
   # Configured for Redis running on localhost. Replace at least host property when running in a
   # distributed environment.
   redis:
@@ -49,9 +49,6 @@ spring:
 #        binder:
 #          brokers: localhost:9093
 #          zkNodes: localhost:2181
-#      bindings:
-#        applicationMetrics:
-#          destination: metrics
 #    deployer:
 #      yarn:
 #        app:

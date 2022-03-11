@@ -24,6 +24,10 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dataflow-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-dataflow-server-yarn-autoconfig</artifactId>
             <version>1.2.3.BUILD-SNAPSHOT</version>
         </dependency>
@@ -41,13 +45,6 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
-                <includes>
-                    <include>kafka-applications.properties</include>
-                    <include>rabbit-applications.properties</include>
-                    <include>dataflow-server.yml</include>
-                    <include>task.yml</include>
-                    <include>stream.yml</include>
-                </includes>
             </resource>
         </resources>
         <plugins>
