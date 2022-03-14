@@ -1,24 +1,30 @@
 server:
-  port: ${dataflow.server.port:9393}
-security:
-  basic:
-    enabled: false
-management:
-  contextPath: /management
+  port: 9393
 info:
   app:
     name: "@project.artifactId@"
-    description: "@project.description@"
+    description: "@project.name@"
     version: "@project.version@"
+
+maven:
+  remoteRepositories:
+    springRepo:
+      url: https://repo.spring.io/libs-snapshot
+
 spring:
-  main:
-    banner_mode: "off"
   application:
     name: spring-cloud-dataflow-server-yarn
   cloud:
+    config:
+      uri: http://localhost:8888
     dataflow:
       yarn:
         version: "@project.version@"
     deployer:
       yarn:
         version: "@spring-cloud-deployer-yarn.version@"
+  datasource:
+    url: jdbc:h2:tcp://localhost:19092/mem:dataflow
+    username: sa
+    password:
+    driverClassName: org.h2.Driver

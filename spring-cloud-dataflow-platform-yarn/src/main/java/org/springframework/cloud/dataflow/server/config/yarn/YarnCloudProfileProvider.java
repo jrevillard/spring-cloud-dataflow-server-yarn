@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.cloud.dataflow.server.yarn;
+package org.springframework.cloud.dataflow.server.config.yarn;
 
 import org.springframework.cloud.dataflow.server.config.CloudProfileProvider;
 import org.springframework.core.env.Environment;
@@ -25,7 +25,8 @@ public class YarnCloudProfileProvider implements CloudProfileProvider {
 
     @Override
     public boolean isCloudPlatform(Environment environment) {
-        return environment.containsProperty("yarn_service_host");
+        // TODO ???
+        return true;
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 the original author or authors.
+ * Copyright 2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.springframework.cloud.dataflow.server.yarn;
+package org.springframework.cloud.dataflow.server.config.yarn;
 
 import java.util.List;
 
@@ -22,20 +22,25 @@ import org.springframework.cloud.dataflow.core.AbstractTaskPlatformFactory;
 import org.springframework.cloud.dataflow.core.Launcher;
 import org.springframework.cloud.deployer.spi.yarn.YarnTaskLauncher;
 
-
 public class YarnTaskPlatformFactory extends AbstractTaskPlatformFactory<YarnPlatformProperties> {
 
 
   private static final String YARN_PLATFORM_TYPE = "Yarn";
-
+  private final YarnPlatformTaskLauncherProperties platformTaskLauncherProperties;
   private final YarnTaskLauncher yarnTaskLauncher;
-  private final boolean schedulesEnabled;
 
   public YarnTaskPlatformFactory(YarnPlatformProperties platformProperties,
-      YarnTaskLauncher yarnTaskLauncher, boolean schedulesEnabled) {
+      YarnTaskLauncher yarnTaskLauncher, boolean schedulesEnabled,
+      YarnPlatformTaskLauncherProperties yarnPlatformTaskLauncherProperties) {
     super(platformProperties, YARN_PLATFORM_TYPE);
     this.yarnTaskLauncher = yarnTaskLauncher;
-    this.schedulesEnabled = schedulesEnabled;
+    this.platformTaskLauncherProperties = yarnPlatformTaskLauncherProperties;
+    if (schedulesEnabled) {
+      logger.error(
+          "{} platform cannot be registered: scheduled tasks not supported",
+          this.platformType);
+      throw new IllegalStateException(this.platformType + " platform cannot be registered:scheduled tasks not supported");
+    }
   }
 
   @Override
@@ -47,16 +52,19 @@ public class YarnTaskPlatformFactory extends AbstractTaskPlatformFactory<YarnPla
 
   @Override
   protected List<Launcher> createLaunchers() {
-    String account = "Yarn";
     List<Launcher> launchers = super.createLaunchers();
-    if (schedulesEnabled) {
-      logger.error(
-          "{} platform account [{}] could not be registered: scheduled tasks not supported",
-          this.platformType, account);
-      throw new IllegalStateException(this.platformType + " platform account [" + account
-          + "] could not be registered:scheduled tasks not supported");
-    }
-    launchers.add(createLauncher(account));
+//    for (String account : this.platformTaskLauncherProperties.getAccounts().keySet()) {
+//        try {
+//            if (!this.platformProperties.accountExists(account)) {
+                launchers.add(createLauncher("default"));
+//            }
+//        }
+//        catch (Exception e) {
+//            logger.error("{} platform account [{}] could not be registered: {}",
+//                    this.platformType, account, e);
+//            throw new IllegalStateException(e.getMessage(), e);
+//        }
+//    }
     return launchers;
   }
 

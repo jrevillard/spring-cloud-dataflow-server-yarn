@@ -51,7 +51,7 @@ information about configuration.
 
 `servers.yml` file is a central place to share common configuration as
 it is added to Boot based jvm processes via option
-`-Dspring.config.location=servers.yml`.
+`-Dspring.config.additional-location=servers.yml`.
 
 === Start Server
 If this is the first time deploying make sure the user that runs
@@ -433,7 +433,7 @@ application can be modified.
 === Generic App Settings
 All applications whether those are stream apps or task apps can be
 centrally configured with `servers.yml` as that file is passed to apps
-using `--spring.config.location='servers.yml'`.
+using `--spring.config.additional-location='servers.yml'`.
 
 === Configuring Application Resources
 Stream and task processes for application master and containers can be

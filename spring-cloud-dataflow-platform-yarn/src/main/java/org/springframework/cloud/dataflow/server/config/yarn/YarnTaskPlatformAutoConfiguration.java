@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.cloud.dataflow.server.yarn;
+
+package org.springframework.cloud.dataflow.server.config.yarn;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,26 +31,27 @@ import org.springframework.core.env.Environment;
  * Creates TaskPlatform implementations to launch/schedule tasks on Yarn.
  */
 @Configuration
-@EnableConfigurationProperties({YarnPlatformProperties.class})
+@EnableConfigurationProperties({YarnPlatformProperties.class, YarnPlatformTaskLauncherProperties.class})
 @ConditionalOnTasksEnabled
 public class YarnTaskPlatformAutoConfiguration {
 
-    @Bean
-    public YarnTaskPlatformFactory yarnTaskPlatformFactory(
-            TaskLauncher yarnTaskLauncher,
-            YarnPlatformProperties yarnPlatformProperties,
-            @Value("${spring.cloud.dataflow.features.schedules-enabled:false}") boolean schedulesEnabled) {
-        return new YarnTaskPlatformFactory(yarnPlatformProperties, (YarnTaskLauncher) yarnTaskLauncher, schedulesEnabled);
-    }
+  @Bean
+  public YarnTaskPlatformFactory yarnTaskPlatformFactory(TaskLauncher yarnTaskLauncher,
+      YarnPlatformProperties yarnPlatformProperties,
+      @Value("${spring.cloud.dataflow.features.schedules-enabled:false}") boolean schedulesEnabled,
+      YarnPlatformTaskLauncherProperties platformTaskLauncherProperties) {
+    return new YarnTaskPlatformFactory(yarnPlatformProperties, (YarnTaskLauncher) yarnTaskLauncher,
+        schedulesEnabled, platformTaskLauncherProperties);
+  }
 
-    @Bean
-    public TaskPlatform yarnTaskPlatform(YarnTaskPlatformFactory yarnTaskPlatformFactory,
-            Environment environment) {
-        TaskPlatform taskPlatform = yarnTaskPlatformFactory.createTaskPlatform();
-        CloudProfileProvider cloudProfileProvider = new YarnCloudProfileProvider();
-        if (cloudProfileProvider.isCloudPlatform(environment)) {
-            taskPlatform.setPrimary(true);
-        }
-        return taskPlatform;
+  @Bean
+  public TaskPlatform yarnTaskPlatform(YarnTaskPlatformFactory yarnTaskPlatformFactory,
+      Environment environment) {
+    TaskPlatform taskPlatform = yarnTaskPlatformFactory.createTaskPlatform();
+    CloudProfileProvider cloudProfileProvider = new YarnCloudProfileProvider();
+    if (cloudProfileProvider.isCloudPlatform(environment)) {
+      taskPlatform.setPrimary(true);
     }
+    return taskPlatform;
+  }
 }

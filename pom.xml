@@ -24,8 +24,8 @@
 	</properties>
 
 	<modules>
+        <module>spring-cloud-dataflow-platform-yarn</module>	
 		<module>spring-cloud-dataflow-server-yarn</module>
-		<module>spring-cloud-dataflow-server-yarn-autoconfig</module>
 		<module>spring-cloud-dataflow-server-yarn-client</module>
 		<module>spring-cloud-dataflow-server-yarn-docs</module>
 		<module>spring-cloud-dataflow-server-yarn-h2</module>
@@ -75,7 +75,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-starter-deployer-yarn</artifactId>
+				<artifactId>spring-cloud-deployer-yarn</artifactId>
 				<version>${spring-cloud-deployer-yarn.version}</version>
 			</dependency>
 			<dependency>
