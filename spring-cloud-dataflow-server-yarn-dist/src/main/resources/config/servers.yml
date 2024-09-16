@@ -12,10 +12,10 @@ spring:
   # Configured for Hadoop single-node running on localhost. Replace with property values reflecting your
   # actual Hadoop cluster when running in a distributed environment.
   hadoop:
-    fsUri: hdfs://localhost:8020
-    resourceManagerHost: localhost
+    fsUri: hdfs://cluster-research:8020
+    resourceManagerHost: bgsmstr01-rci.bigeys.priv
     resourceManagerPort: 8032
-    resourceManagerSchedulerAddress: localhost:8030
+    resourceManagerSchedulerAddress: bgsmstr01-rci.bigeys.priv:8030
   # Configured for Redis running on localhost. Replace at least host property when running in a
   # distributed environment.
   redis:
@@ -43,15 +43,42 @@ spring:
 #    username: yourUsername
 #    password: yourPassword
 #    driverClassName: org.postgresql.Driver
+  cloud:
+    deployer:
+      yarn:
+        version: "1.2.3.BUILD-SNAPSHOT"
+  yarn:
+    appType: DATAFLOW
+    applicationBaseDir: ${spring.cloud.deployer.yarn.app.baseDir:/dataflow}/apps/task/
+    client:
+      enabled: true
+      clientClass: org.springframework.cloud.deployer.spi.yarn.DeployerApplicationYarnClient
+      files:
+        - "file:${deployer.yarn.app.appmaster.path:lib}/spring-cloud-deployer-yarn-tasklauncherappmaster-*.jar"
+        - "file:${deployer.yarn.app.config.path:config}/servers.yml*"
+      queue: ${spring.cloud.deployer.yarn.app.taskappmaster.queue:default}
+      labelExpression: ${spring.cloud.deployer.yarn.app.taskappmaster.labelExpression:}
+      launchcontext:
+        options:
+          - ${spring.cloud.deployer.yarn.app.taskappmaster.javaOpts:}
+        arguments:
+          --Dspring.config.location: servers.yml
+        archiveFile: spring-cloud-deployer-yarn-tasklauncherappmaster-${spring.cloud.deployer.yarn.version}.jar
+      localizer:
+        patterns:
+          - "spring-cloud-deployer-yarn-tasklauncherappmaster-*.jar"
+          - "servers.yml"
+      resource:
+        memory: ${spring.cloud.deployer.yarn.app.taskappmaster.memory:512m}
+        virtualCores: ${spring.cloud.deployer.yarn.app.taskappmaster.virtualCores:1}
+    container:
+      enabled: false
 #  cloud:
 #    stream:
 #      kafka:
 #        binder:
 #          brokers: localhost:9093
 #          zkNodes: localhost:2181
-#      bindings:
-#        applicationMetrics:
-#          destination: metrics
 #    deployer:
 #      yarn:
 #        app:

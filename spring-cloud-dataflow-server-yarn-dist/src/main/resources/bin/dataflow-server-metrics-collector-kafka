@@ -181,4 +181,4 @@ eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $COLLECTOR_OPTS
 #
 # This is a work around to pick up log4j.properties to avoid the log4j missing appender warnings for HSQLDB.
 #
-exec "$JAVACMD" "${JVM_OPTS[@]}" -jar "${APP_HOME}/lib/metrics-collector-kafka-10-${COLLECTOR_VERSION}.jar" "$@"
+exec "$JAVACMD" "${JVM_OPTS[@]}" -jar "${APP_HOME}/lib/metrics-collector-kafka-${COLLECTOR_VERSION}.jar" "$@"

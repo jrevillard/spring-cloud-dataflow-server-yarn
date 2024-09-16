@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
 
 package org.springframework.cloud.dataflow.yarn.client;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -26,8 +27,6 @@ import org.springframework.cloud.deployer.spi.yarn.YarnCloudAppService.CloudAppT
 import org.springframework.yarn.boot.app.ClientApplicationRunner;
 import org.springframework.yarn.boot.cli.AbstractApplicationCommand;
 import org.springframework.yarn.boot.cli.CliSystemConstants;
-
-import static java.util.Arrays.asList;
 
 /**
  * Command pushing an application package into hdfs.
@@ -72,7 +71,7 @@ public class YarnPushCommand extends AbstractApplicationCommand {
 
 	public static class PushOptionHandler extends ApplicationOptionHandler<String> {
 
-		public final static List<String> OPTIONS_CLOUD_APP_TYPE  = asList("cloud-app-type", "t");
+		public final static List<String> OPTIONS_CLOUD_APP_TYPE  = Arrays.asList("cloud-app-type", "t");
 		public final static String DESC_CLOUD_APP_TYPE  = "Cloud App Type (STREAM|TASK)";
 		private OptionSpec<CloudAppType> cloudAppTypeOption;
 		private OptionSpec<String> applicationVersionOption;

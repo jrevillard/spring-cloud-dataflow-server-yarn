@@ -38,9 +38,6 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
-				<includes>
-					<include>application.yml</include>
-				</includes>
 			</resource>
 		</resources>
 		<plugins>
@@ -55,4 +52,13 @@
 		</plugins>
 	</build>
 
+	<dependencyManagement>
+	  <dependencies>
+	    <dependency>
+	      <groupId>net.sf.jopt-simple</groupId>
+	      <artifactId>jopt-simple</artifactId>
+	      <scope>compile</scope>
+	    </dependency>
+	  </dependencies>
+	</dependencyManagement>
 </project>

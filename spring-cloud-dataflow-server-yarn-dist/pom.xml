@@ -52,12 +52,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>metrics-collector-kafka-09</artifactId>
-			<version>${spring-cloud-metrics-collector.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>metrics-collector-kafka-10</artifactId>
+			<artifactId>metrics-collector-kafka</artifactId>
 			<version>${spring-cloud-metrics-collector.version}</version>
 		</dependency>
 	</dependencies>
